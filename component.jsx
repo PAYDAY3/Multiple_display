@@ -1,4 +1,8 @@
-
+/**
+ * v0 by Vercel.
+ * @see https://v0.dev/t/fCfPTmpWSlx
+ * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
+ */
 "use client"
 
 import { useState } from "react"
@@ -6,6 +10,9 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function Component() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -182,6 +189,63 @@ export default function Component() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber)
   }
+  const [newAd, setNewAd] = useState({
+    image: "/placeholder.svg",
+    title: "",
+    description: "",
+    type: "",
+    salary: "",
+    requirements: {
+      experience: "",
+      education: "",
+      skills: [],
+    },
+    companyWebsite: "",
+    isEditable: true,
+  })
+  const handleAddAd = () => {
+    setFilteredAds([...filteredAds, newAd])
+    setNewAd({
+      image: "/placeholder.svg",
+      title: "",
+      description: "",
+      type: "",
+      salary: "",
+      requirements: {
+        experience: "",
+        education: "",
+        skills: [],
+      },
+      companyWebsite: "",
+      isEditable: true,
+    })
+  }
+  const handleInputChange = (e) => {
+    setNewAd({
+      ...newAd,
+      [e.target.name]: e.target.value,
+    })
+  }
+  const handleRequirementChange = (e, index) => {
+    const updatedRequirements = [...newAd.requirements.skills]
+    updatedRequirements[index] = e.target.value
+    setNewAd({
+      ...newAd,
+      requirements: {
+        ...newAd.requirements,
+        skills: updatedRequirements,
+      },
+    })
+  }
+  const handleAddRequirement = () => {
+    setNewAd({
+      ...newAd,
+      requirements: {
+        ...newAd.requirements,
+        skills: [...newAd.requirements.skills, ""],
+      },
+    })
+  }
   return (
     <div className="w-full max-w-4xl mx-auto py-12 md:py-16 lg:py-20">
       <div className="mb-8 md:mb-10 lg:mb-12">
@@ -244,8 +308,12 @@ export default function Component() {
                 </div>
               </div>
               <div className="mt-4 text-sm text-muted-foreground">
-                <Link href="#" className="hover:underline" prefetch={false}>
+                <Link href="#" className="hover:underline flex items-center gap-2" prefetch={false}>
                   {new URL(ad.companyWebsite).hostname}
+                  <Button variant="ghost" size="icon" onClick={() => navigator.clipboard.writeText(ad.companyWebsite)}>
+                    <CopyIcon className="h-4 w-4" />
+                    <span className="sr-only">Copy link</span>
+                  </Button>
                 </Link>
               </div>
             </div>
@@ -269,6 +337,103 @@ export default function Component() {
           </PaginationContent>
         </Pagination>
       </div>
+      <div className="mt-8 flex justify-center">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>Add New Ad</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="title">Title</Label>
+                <Input id="title" name="title" value={newAd.title} onChange={handleInputChange} />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  name="description"
+                  value={newAd.description}
+                  onChange={handleInputChange}
+                  className="min-h-[100px]"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="type">Type</Label>
+                <Input id="type" name="type" value={newAd.type} onChange={handleInputChange} />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="salary">Salary</Label>
+                <Input id="salary" name="salary" value={newAd.salary} onChange={handleInputChange} />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="experience">Experience</Label>
+                <Input
+                  id="experience"
+                  name="experience"
+                  value={newAd.requirements.experience}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="education">Education</Label>
+                <Input
+                  id="education"
+                  name="education"
+                  value={newAd.requirements.education}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="skills">Skills</Label>
+                <div className="grid gap-2">
+                  {newAd.requirements.skills.map((skill, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <Input
+                        id={`skill-${index}`}
+                        name={`skill-${index}`}
+                        value={skill}
+                        onChange={(e) => handleRequirementChange(e, index)}
+                      />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => {
+                          const updatedSkills = [...newAd.requirements.skills]
+                          updatedSkills.splice(index, 1)
+                          setNewAd({
+                            ...newA,
+                          })
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
+  )
+}
+
+function CopyIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+    </svg>
   )
 }
