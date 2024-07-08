@@ -1,6 +1,6 @@
 /**
  * v0 by Vercel.
- * @see https://v0.dev/t/fCfPTmpWSlx
+ * @see https://v0.dev/t/ziQM9L6atoV
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 "use client"
@@ -18,7 +18,7 @@ export default function Component() {
   const [searchTerm, setSearchTerm] = useState("")
   const [filteredAds, setFilteredAds] = useState([
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "软件工程师",
       description: "寻求具有丰富JavaScript技能的有经验软件工程师。",
       type: "工程",
@@ -32,7 +32,7 @@ export default function Component() {
       isEditable: true,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "营销协调员",
       description: "加入我们充满活力的营销团队,助力业务增长。",
       type: "营销",
@@ -46,7 +46,7 @@ export default function Component() {
       isEditable: true,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "平面设计师",
       description: "寻求一位才华横溢的平面设计师,创造出视觉震撼的设计。",
       type: "设计",
@@ -60,7 +60,7 @@ export default function Component() {
       isEditable: true,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "产品经理",
       description: "寻求一位出色的产品经理,推动产品创新与发展。",
       type: "产品",
@@ -74,7 +74,7 @@ export default function Component() {
       isEditable: false,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "数据分析师",
       description: "寻求一位精通数据分析的专业人士,为业务提供数据支持。",
       type: "数据",
@@ -88,7 +88,7 @@ export default function Component() {
       isEditable: false,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "内容编辑",
       description: "寻求一位出色的内容编辑,为我们的网站创作优质内容。",
       type: "内容",
@@ -102,7 +102,7 @@ export default function Component() {
       isEditable: true,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "项目经理",
       description: "寻求一位富有经验的项目经理,带领团队高效交付项目。",
       type: "项目",
@@ -116,7 +116,7 @@ export default function Component() {
       isEditable: false,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "市场营销专员",
       description: "寻求一位热情洋溢的市场营销专员,推动产品销售。",
       type: "营销",
@@ -130,7 +130,7 @@ export default function Component() {
       isEditable: true,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "用户体验设计师",
       description: "寻求一位出色的用户体验设计师,打造优秀的产品交互体验。",
       type: "设计",
@@ -144,7 +144,7 @@ export default function Component() {
       isEditable: true,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "数据科学家",
       description: "寻求一位精通数据科学的专业人士,为业务提供数据驱动的洞见。",
       type: "数据",
@@ -158,7 +158,7 @@ export default function Component() {
       isEditable: false,
     },
     {
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "内容策略师",
       description: "寻求一位出色的内容策略师,制定并执行内容营销计划。",
       type: "内容",
@@ -190,7 +190,7 @@ export default function Component() {
     setCurrentPage(pageNumber)
   }
   const [newAd, setNewAd] = useState({
-    image: "/placeholder.svg",
+    image: "/placeholder.svg?height=400&width=600",
     title: "",
     description: "",
     type: "",
@@ -206,7 +206,7 @@ export default function Component() {
   const handleAddAd = () => {
     setFilteredAds([...filteredAds, newAd])
     setNewAd({
-      image: "/placeholder.svg",
+      image: "/placeholder.svg?height=400&width=600",
       title: "",
       description: "",
       type: "",
@@ -298,7 +298,7 @@ export default function Component() {
             </div>
             <div className="p-4 md:p-6 flex flex-col justify-between">
               <div>
-                <h3 className="text-lg md:text-xl font-semibold mb-2">{ad.title}</h3>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 cursor-pointer">{ad.title}</h3>
                 <p className="text-muted-foreground text-sm md:text-base">{ad.description}</p>
               </div>
               <div className="mt-4 flex items-center justify-between">
@@ -389,23 +389,7 @@ export default function Component() {
                 <div className="grid gap-2">
                   {newAd.requirements.skills.map((skill, index) => (
                     <div key={index} className="flex items-center gap-2">
-                      <Input
-                        id={`skill-${index}`}
-                        name={`skill-${index}`}
-                        value={skill}
-                        onChange={(e) => handleRequirementChange(e, index)}
-                      />
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => {
-                          const updatedSkills = [...newAd.requirements.skills]
-                          updatedSkills.splice(index, 1)
-                          setNewAd({
-                            ...newA,
-                          })
-                        }}
-                      />
+                      <Input i />
                     </div>
                   ))}
                 </div>
@@ -436,4 +420,4 @@ function CopyIcon(props) {
       <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
     </svg>
   )
-}
+    }
